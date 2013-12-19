@@ -15,6 +15,9 @@ rpm --import http://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-6
 wget http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 rpm -ivh epel-release-6-8.noarch.rpm
 
+# Install tools necessary to build other tools ;)
+yum groupinstall "Development Tools"
+
 # Grab packages
 yum -y install autoconf automake bind-utils rng-tools postgresql-server httpd httpd-devel mod_ssl gcc make expat expat-devel uuid wget bind rsync libuuid-devel mod_perl ntpdate perl-Digest-SHA libxml2 libxml2-devel perl-XML-LibXML perl-DBD-Pg perl-Module-Pluggable perl-CPAN  perl-XML-Parser  perl-Net-DNS perl-IO-Socket-INET6 openssl-devel  perl-Net-SSLeay perl-Date-Manip perl-IO-Socket-SSL git
 
