@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Tested on CentOS (Netsniff-NG fails build because lack of TPACKET_V3, a problem with EL systems)
-
+# Tested on CentOS (Netsniff-NG and Astraceroute fail to build because lack of TPACKET_V3, a problem with EL systems)
+# Installs: ifpps trafgen bpfc flowtop mausezahn
 DESIRED_TOOLKIT_VERSION="$1" # e.g. ./install_netsniff-ng.sh "0.5.9-rc2+"
 DIR=/root
 HOST=$(hostname -s)
