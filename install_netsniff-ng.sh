@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-# Tested on CentOS (Netsniff-NG and Astraceroute fail to build because lack of TPACKET_V3, a problem with EL systems)
-# Installs: ifpps trafgen bpfc flowtop mausezahn
+# Tested on CentOS
+# Cannot install Netsniff-NG because lack of TPACKET_V3 support in kernel, a problem with EL systems)
+# Installs: ifpps trafgen bpfc flowtop mausezahn astraceroute
+# Optional: To build curvetun uncomment NaCL lines in install_nestniff-ng function and add to make line
+
 DESIRED_TOOLKIT_VERSION="$1" # e.g. ./install_netsniff-ng.sh "0.5.9-rc2+"
 DIR=/root
 HOST=$(hostname -s)
@@ -31,7 +34,7 @@ function hi {
     	echo "$*"
     fi
     if [ -f $IRCSAY ]; then
-    	( set +e; $IRCSAY "#company-channel" "$*" 2>/dev/null || true ) 
+    	( set +e; $IRCSAY "#company-channel" "$*" 2>/dev/null || true )
     fi
     # echo "$*" | mail -s "Netsniff-NG install information on $HOST" user@company.com
 }
@@ -75,7 +78,7 @@ function install_dependencies()
 {
 local ORDER=$1
 echo -e "$ORDER Checking for dependencies!\n"
-if [ ! -f /etc/yum.repos.d/epel.repo ]; then 
+if [ ! -f /etc/yum.repos.d/epel.repo ]; then
 	rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm && hi "Installed EPEL repo!" || die "Failed to install EPEL"
 fi
 
@@ -84,13 +87,13 @@ yum install -y git ccache flex bison GeoIP-devel \
 	 userspace-rcu-devel libpcap-devel zlib-devel \
 	 libnet-devel gnuplot cpp
 echo
-if [ ! -f /usr/lib64/libcli.so.1.8.6 ]; then 
+if [ ! -f /usr/lib64/libcli.so.1.8.6 ]; then
 	rpm -ivh http://pkgs.repoforge.org/libcli/libcli-1.8.6-2.el6.rf.x86_64.rpm && hi "Installed libcli!" || die "Failed to install libcli"
 fi
-if [ ! -f /usr/include/libcli.h ]; then 
+if [ ! -f /usr/include/libcli.h ]; then
 	rpm -ivh http://pkgs.repoforge.org/libcli/libcli-devel-1.8.6-2.el6.rf.x86_64.rpm && hi "Installed libcli-devel!" || die "Failed to install libcli-devel"
 fi
-if [ ! -d /usr/local/lib/libnl ]; then 
+if [ ! -d /usr/local/lib/libnl ]; then
 	wget http://www.infradead.org/~tgr/libnl/files/libnl-3.2.25.tar.gz
 	tar zxf libnl-3.2.25.tar.gz
 	cd libnl-3.2.25
@@ -103,7 +106,7 @@ local ORDER=$1
 echo -e "$ORDER Installing from source!\n"
 cd $DIR
 if git clone https://github.com/netsniff-ng/netsniff-ng.git
-then 
+then
         cd netsniff-ng
 	./configure 2>&1 > /dev/null
 	# Uncomment next 4 lines to build library for curvetun, then add "curvetun" and curvetun_install to make line.
@@ -112,8 +115,8 @@ then
 	# export NACL_LIB_DIR=/root/nacl/$nacl_version/build/$shorthostname/lib/$arch
 	# export NACL_INC_DIR=/root/nacl/$nacl_version/build/$shorthostname/include/$arch
 	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-  ./configure && make ifpps trafgen bpfc flowtop mausezahn && make ifpps_install trafgen_install bpfc_install flowtop_install mausezahn_install
-        
+  ./configure && make ifpps trafgen bpfc flowtop mausezahn astraceroute && make ifpps_install trafgen_install bpfc_install flowtop_install mausezahn_install astraceroute_install
+
 	if [ $? -eq 0 ]; then
 		hi "Netsniff-NG successfully installed!"
 	else
