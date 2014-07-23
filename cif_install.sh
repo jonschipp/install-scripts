@@ -1,9 +1,13 @@
 #!/bin/bash
 # Install the Collective Intelligence Framework and all dependencies
 # Configures most things too based on the documentation
+# Rudimentary, no flow control, just copied and pasted commands because of limited time
 
-# No flow control, just copied and pasted commands because of limited time
+# I run like so,
+# $ ./cif_install 1>1.log 2>2.log
+# $ tail -f 1.log 2.log (To watch progress in new window or tab)
 
+# Tested on
 # $ cat /etc/redhat-release
 # Red Hat Enterprise Linux Server release 6.4 (Santiago)
 
