@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # This script is intended to restore a Bitnami gitlabs stack to a new machine
 # from a gzip'd tarball into /opt/$VERSION
 #
