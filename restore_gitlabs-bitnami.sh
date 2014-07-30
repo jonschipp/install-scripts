@@ -113,7 +113,7 @@ if [ -d /opt/$VERSION ]
 then
 	echo "Setting permissions for redis, mysql, and gitlab apps"
 	chown -R mysql:root /opt/$VERSION/mysql/data/
-	chown redis:redis /opt/$VERSION/redis/var/log /opt/$VERSION/redis/var/log/redis-server.log
+	chown -R redis:redis /opt/$VERSION/redis/var/
 	chown -R git:git /opt/$VERSION/apps/gitlab/
 	chown -R gitlab_ci:gitlab_ci /opt/$VERSION/apps/gitlabci/
 fi
