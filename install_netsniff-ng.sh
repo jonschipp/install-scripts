@@ -82,7 +82,7 @@ if [ ! -f /etc/yum.repos.d/epel.repo ]; then
 	rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm && hi "Installed EPEL repo!" || die "Failed to install EPEL"
 fi
 
-yum install -y git ccache flex bison GeoIP-devel \
+yum install -y wget git ccache flex bison GeoIP-devel \
 	 libnetfilter_conntrack-devel ncurses-devel \
 	 userspace-rcu-devel libpcap-devel zlib-devel \
 	 libnet-devel gnuplot cpp
